@@ -32,45 +32,54 @@ function Endereco(estado: string, cidade: string, rua: string, numero: string) {
     let _rua = rua
     let _numero = numero
 
-    //Métodos get e set para o estado
+
     Object.defineProperty(this, "estado", {
-        get: function(){
-            return _estado;
+        get: function () {
+            return {
+                normal: _estado,
+                lower: _estado.toLowerCase(),
+                upper: _estado.toUpperCase()
+            };
         },
-        set: function(value: string){
-            _estado = value
+        set: function (value: string) {
+            _estado = value;
         }
-    })
+    });
 
-    //Métodos get e set para a cidade
     Object.defineProperty(this, "cidade", {
-        get: function(){
-            return _cidade;
+        get: function () {
+            return {
+                normal: _cidade,
+                lower: _cidade.toLowerCase(),
+                upper: _cidade.toUpperCase()
+            };
         },
-        set: function(value: string){
-            _cidade = value
+        set: function (value: string) {
+            _cidade = value;
         }
-    })
+    });
 
-    //Métodos get e set para a rua
     Object.defineProperty(this, "rua", {
-        get: function(){
-            return _rua;
+        get: function () {
+            return {
+                normal: _rua,
+                lower: _rua.toLowerCase(),
+                upper: _rua.toUpperCase()
+            };
         },
-        set: function(value: string){
-            _rua = value
+        set: function (value: string) {
+            _rua = value;
         }
-    })
+    });
 
-    //Métodos get e set para o número
     Object.defineProperty(this, "numero", {
-        get: function(){
+        get: function () {
             return _numero;
         },
-        set: function(value: string){
-            _numero = value
+        set: function (value: string) {
+            _numero = value;
         }
-    })
+    });
 }
 
 function Cliente(nome: string, telefoneCelular: any, email: string, endereco: any) {
@@ -114,6 +123,44 @@ function Cliente(nome: string, telefoneCelular: any, email: string, endereco: an
             _endereco = value;
         },
 
+        // Getter para o nome em lowercase
+        get nomeLower() {
+            return _nome.toLowerCase();
+        },
+
+        // Getter para o nome em uppercase
+        get nomeUpper() {
+            return _nome.toUpperCase();
+        },
+
+        // Getter para o email em lowercase
+        get emailLower() {
+            return _email.toLowerCase();
+        },
+
+        // Getter para o email em uppercase
+        get emailUpper() {
+            return _email.toUpperCase();
+        },
+
+        // Getter para o endereço
+        get enderecoLower() {
+            return {
+                rua: _endereco.rua.toLowerCase(),
+                cidade: _endereco.cidade.toLowerCase(),
+                estado: _endereco.estado.toLowerCase()
+            };
+        },
+
+        // Getter para o endereço em uppercase
+        get enderecoUpper() {
+            return {
+                rua: _endereco.rua.toUpperCase(),
+                cidade: _endereco.cidade.toUpperCase(),
+                estado: _endereco.estado.toUpperCase()
+            };
+        },
+
         get descricao() {
             return '-----------------\n' +
                 "Informações do Cliente:\n" +
@@ -125,10 +172,10 @@ function Cliente(nome: string, telefoneCelular: any, email: string, endereco: an
                 'Número: ' + this.telefoneCelular.NumeroTelefone + "\n" +
                 '-----------------\n' +
                 'Endereço: \n' +
-                'Rua: ' + this.endereco.rua + '\n' +
+                'Rua: ' + this.endereco.rua.normal + '\n' +
                 'Número: ' + this.endereco.numero + '\n' +
-                'Cidade: ' + this.endereco.cidade + '\n' +
-                'Estado: ' + this.endereco.estado;
+                'Cidade: ' + this.endereco.cidade.normal + '\n' +
+                'Estado: ' + this.endereco.estado.normal;
         }
     };
 }
@@ -148,15 +195,26 @@ let telefone3 = new Telefone('31', '988541237');
 let endereco3 = new Endereco('MG', 'Belo Horizonte', 'Av. Amazonas', '456');
 let cliente3 = Cliente('Fernando Almeida', telefone3, 'fernando.almeida@gmail.com', endereco3);
 
+
 // Criando os objetos - Cliente 4
-let telefone4 = new Telefone('41', '999874563');
-let endereco4 = new Endereco('PR', 'Curitiba', 'Rua XV de Novembro', '789');
-let cliente4 = Cliente('Juliana Rodrigues', telefone4, 'juliana.rodrigues@gmail.com', endereco4);
+let telefone4 = new Telefone('51', '992314578');
+let endereco4 = new Endereco('RS', 'Porto Alegre', 'Av. Borges de Medeiros', '101');
+let cliente4 = Cliente('Roberto Silva', telefone4, 'roberto.silva@gmail.com', endereco4);
+
 
 // Criando os objetos - Cliente 5
-let telefone5 = new Telefone('51', '992314578');
-let endereco5 = new Endereco('RS', 'Porto Alegre', 'Av. Borges de Medeiros', '101');
-let cliente5 = Cliente('Roberto Silva', telefone5, 'roberto.silva@gmail.com', endereco5);
+let telefone5 = new Telefone('41', '999874563');
+let endereco5 = new Endereco('PR', 'Curitiba', 'Rua XV de Novembro', '789');
+let cliente5 = Cliente('Juliana Rodrigues', telefone5, 'juliana.rodrigues@gmail.com', endereco5);
+
+
+
+
+//Testando os get upper e lower
+//Nome do primeiro cliente em lowercase e uppercase
+console.log("Nome em uppercase e lowercase: \n")
+console.log(cliente1.nomeLower)
+console.log(cliente1.nomeUpper)
 
 
 
@@ -168,12 +226,12 @@ let clientes = [cliente1, cliente2, cliente3, cliente4, cliente5];
 clientes.sort((a, b) => {
     // Comparando os nomes de cada cliente, retornando a ordem alfabética
     if (a.nome < b.nome) {
-        return -1; // a vem antes de b
+        return -1; 
     }
     if (a.nome > b.nome) {
-        return 1; // b vem antes de a
+        return 1;
     }
-    return 0; // a e b são iguais
+    return 0;
 });
 
 
